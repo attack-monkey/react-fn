@@ -17,6 +17,8 @@ const myComponent = ({ state, actions }) => (
   <div>
     <h1>{state.greeting}</h1>
     <button onClick={ actions.changeGreeting('hello ben') }>Change greeting</button>
+    {/* Pass state and actions into any child components */}
+    <childComponent state={state} actions={actions}></childComponent>
   </div>
 );
 
