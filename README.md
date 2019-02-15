@@ -1,13 +1,6 @@
 # React-Fn
 A simple, functional approach to React
 
-React-Fn takes a functional approach to React.
-
-- Only requires functional components
-- State is global
-- State can only be changed with 'actions'
-- Making changes to large nested state is simple.
-
 ## Install
 
 ## Basics
