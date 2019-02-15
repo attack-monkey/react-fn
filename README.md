@@ -37,7 +37,7 @@ app(state, myComponent, actions, mount);
 
 ## Actions
 
-Actions are functions that cause a side-effect such as a state change.
+Actions are functions that cause side-effects such as state changes.
 
 ### State Changes
 
