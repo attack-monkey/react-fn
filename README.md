@@ -110,10 +110,10 @@ fn.updateState('some/nested/node', 'here i am', { rerender: false });
 
 Async code causes **closures** to be created.  
 A closure takes a snapshot of State at the time it is created.  
-While the State of app continues to change outside of the cosure - the closure is none the wiser.  
+While the State of the app continues to change outside of the cosure - the closure is none the wiser.  
 The closure keeps it's own version of State.
 
-To avoid the State in a closure from being out of sync with the rest of the app, use `fn.getState`, which ensures that the current state of the app is used...
+To avoid the state in a closure from being out of sync with the rest of the app, use `fn.getState`, which ensures that the current state of the app is used...
 
 ```javascript
 
