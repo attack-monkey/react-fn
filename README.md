@@ -108,10 +108,10 @@ fn.updateState('some/nested/node', 'here i am', { rerender: false });
 
 ### Async Actions
 
-Async code causes closures to be created.  
+Async code causes **closures** to be created.  
 A closure takes a snapshot of State at the time it is created.  
-While the State of app continues to change outside of the, the closure is none the wiser.  
-The closure keeps it's own version of State
+While the State of app continues to change outside of the cosure - the closure is none the wiser.  
+The closure keeps it's own version of State.
 
 To avoid the State in a closure from being out of sync with the rest of the app, use `fn.getState`, which ensures that the current state of the app is used...
 
@@ -131,3 +131,7 @@ const actions = (fn) => {
 ```
 
 ### Engines. Actions that produce ongoing value streams
+
+Engines are Asynchronous Actions that are able to be turned on and off. While in an 'on' state, they produce a value-stream (Multiple updates to State) until the 'off' switch is triggered.
+
+
