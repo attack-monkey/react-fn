@@ -50,7 +50,7 @@ Actions can be passed down to child components.
 
 ### State
 
-Rather than State exist within many components, State instead exists in one place.  
+Rather than State existing within many components, it instead lives in one place.  
 State is just a pure javascript object (no methods).  
 State is passed into the first component and can be passed down to child components.
 
