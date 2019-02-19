@@ -7,8 +7,7 @@ A simple, functional approach to React
 
 ## The Low-down
 
-React-fn is a functional approach to React. All components are functional and do not store their own state.
-Instead State exists in one place as a pure object (no methods), and can only be changed via Actions. Both State and Actions are injected into your first component and are passed down into child components.
+React-fn is a functional approach to React. Take a look at this basic app below. You'll notice that State and Actions are decoupled from Components altogether, making for a clean and simple dev experience. 
 
 ## Basic App
 
@@ -50,10 +49,9 @@ Actions can be passed down to child components.
 
 ### State
 
-Rather than State existing within many components, it instead lives in one place.  
+Rather than State existing within the components, it is stored in a single global state object.
 State is just a pure javascript object (no methods).  
 State is passed into the first component and can be passed down to child components.
-
 
 Changing state is done in Actions via the `fn` api...
 
@@ -101,6 +99,9 @@ fn.updateState('some/nested/node', 'here i am', { rerender: false });
 ## The Advanced Guide
 
 ### The Shape of State
+
+State can be structured to  
+a) reflect the current view o
 
 ### updateState and updateMulti
  
