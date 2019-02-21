@@ -7,7 +7,11 @@ A simple, functional approach to React
 
 ## The Low-down
 
-React-fn is a functional approach to React. Take a look at this basic app below. You'll notice that State and Actions are decoupled from Components altogether, making for a clean and simple dev experience. 
+React-fn is a functional approach to React. Take a look at this basic app below. You'll notice that State and Actions are decoupled from Components altogether, making things clean and simple.
+
+- Components take in State and Actions
+- Components can display State, but can only modify it via actions
+- Upon state-change, the app refreshes
 
 ## Basic App
 
@@ -19,7 +23,7 @@ const state = {
 };
 
 // functional component has state and actions passed in
-const myComponent = ({ state, actions }) => (
+const MyComponent = ({ state: any, actions: any }) => (
   <div>
     <h1>{state.greeting}</h1>
     <button onClick={ actions.changeGreeting('hello ben') }>Change greeting</button>
@@ -29,7 +33,7 @@ const myComponent = ({ state, actions }) => (
 );
 
 // actions have the fn api passed in and fn.updateState can be used to update the App's State
-const actions = (fn) => {
+const actions = (fn: Fn): any => {
   changeGreeting: (newGreeting) => fn.updateState('greeting', newGreeting)
 }
 
@@ -37,7 +41,7 @@ const actions = (fn) => {
 const mount = document.querySelector('#app');
 
 // run your app
-app(state, myComponent, actions, mount);
+app(state, MyComponent, actions, mount);
 
 ```
 
@@ -45,7 +49,7 @@ app(state, myComponent, actions, mount);
 
 Actions are functions that cause side-effects (Usually state changes).  
 As you can see above, Actions are passed in to the first component.  
-Actions can be passed down to child components.
+Actions are then passed down to child components.
 
 ### State
 
@@ -53,7 +57,7 @@ Rather than State existing within the components, it is stored in a single globa
 State is just a pure javascript object (no methods).  
 State is passed into the first component and can be passed down to child components.
 
-Changing state is done in Actions via the `fn` api...
+Changing state is done in Actions via the `fn.updateState` method...
 
 Let's say your state is 
 
@@ -103,9 +107,18 @@ fn.updateState('some/nested/node', 'here i am', { rerender: false });
 State can be structured to  
 a) reflect the current view o
 
+### The fn api
+
+actions takes in the `fn` api as a prop, exposing the api for interacting with React-Fn.
+
+| method | use |
+| fn.getState | sdf|
+
 ### updateState and updateMulti
  
 ### Chaining Actions with fn.relay()
+
+An action can call another action with `fn.relay()`
 
 ### Async Actions
 
