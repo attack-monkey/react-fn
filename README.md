@@ -147,12 +147,7 @@ TODO
 
 ### Async Actions
 
-Async code causes **closures** to be created.  
-A closure takes a snapshot of State at the time it is created.  
-While the State of the app continues to change outside of the cosure - the closure is none the wiser.  
-The closure keeps it's own version of State.
-
-To avoid the state in a closure from being out of sync with the rest of the app, use `fn.getState`, which ensures that the current state of the app is used...
+To avoid the state in a closure from being out of sync with the rest of the app, actions should use `fn.getState`, which ensures that the current state of the app is used. To be clear, components can simply use the passed in `state` since they should always be synchronous. Actions however can be async and should instead use `fn.getState`...
 
 ```javascript
 
@@ -203,7 +198,7 @@ stopCountEngine: () => {
 
 This is all well and good, however sometimes we want to trigger an engine start when a particular component is in view and stop the engine when it is not.
 
-React-Fn provides an `beforeRender` function to be provided as part of the app function's config object. This function takes in both State and Actions, and is called whenever the app is about to rerender (refresh).
+React-Fn provides a `beforeRender` function that can be included in the app function's config object. This function takes in both State and Actions, and is called whenever the app is about to rerender (refresh).
 
 By using `beforeRender`, and checking `state.route`, actions such as `stopCountEngine` can be called when a `route` meets a particular condition.
 
