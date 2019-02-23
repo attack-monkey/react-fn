@@ -10,7 +10,7 @@ A simple, functional approach to React
 React-fn is a functional approach to React. Take a look at this basic app below. You'll notice that State and Actions are decoupled from Components altogether, making things clean and simple.
 
 - Components take in State and Actions
-- Components can display State, but can only modify it via actions
+- Components can display State, but Components must call Actions to update State
 - Upon state-change, the app refreshes
 
 ## Basic App
@@ -147,7 +147,7 @@ TODO
 
 ### Async Actions
 
-To avoid the state in a closure from being out of sync with the rest of the app, actions should use `fn.getState`, which ensures that the current state of the app is used. To be clear, components can simply use the passed in `state` since they should always be synchronous. Actions however can be async and should instead use `fn.getState`...
+To avoid the state in an async action from being out of sync with the rest of the app, actions should use `fn.getState`, which ensures that the current state of the app is used. To be clear, components can simply use the passed in `state` since they are always be synchronous. Actions however can be async and should instead use `fn.getState`...
 
 ```javascript
 
