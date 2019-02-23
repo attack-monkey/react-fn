@@ -104,7 +104,7 @@ fn.updateState('some/nested/node', 'here i am', { rerender: false });
 
 ### The fn api
 
-actions takes in the `fn` api as a prop, exposing the api for interacting with React-Fn.
+The fn api is accessible via actions.
 
 #### getState
 
