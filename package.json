@@ -1,0 +1,27 @@
+{
+  "name": "react-fn",
+  "version": "1.0.0",
+  "description": "The Functional Approach to React",
+  "main": "index.ts",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/attack-monkey/react-fn.git"
+  },
+  "keywords": [
+    "react",
+    "functional"
+  ],
+  "author": "attack-monkey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/attack-monkey/react-fn/issues"
+  },
+  "homepage": "https://github.com/attack-monkey/react-fn#readme",
+  "dependencies": {
+    "iu-ts": "^1.0.0",
+    "react-dom": "^16.8.3"
+  }
+}
