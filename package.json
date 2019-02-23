@@ -1,6 +1,6 @@
 {
   "name": "react-fn",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "The Functional Approach to React",
   "main": "index.ts",
   "scripts": {
@@ -22,6 +22,7 @@
   "homepage": "https://github.com/attack-monkey/react-fn#readme",
   "dependencies": {
     "@types/react": "^16.8.4",
+    "@types/react-dom": "^16.8.2",
     "iu-ts": "^1.0.0",
     "react-dom": "^16.8.3"
   }

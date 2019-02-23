@@ -1,9 +1,36 @@
 # React-Fn
 A simple, functional approach to React
 
-# WORK IN PROGRESS
+# v1 out now
 
 ## Install
+
+Globally install parcel.js (This is the project bundler).
+
+```
+
+npm install -g parcel-bundler
+
+```
+
+Globally install douglas (This unwraps the seed project )
+
+```
+
+npm install -g douglas
+
+```
+
+Get react-fn-seed and install using douglas
+
+```
+
+douglas get react-fn-seed
+
+```
+
+Now you can run using `npm start`
+
 
 ## The Low-down
 
