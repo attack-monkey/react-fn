@@ -83,7 +83,7 @@ As you can see above, Actions are passed in to the first component.
 Actions are then passed down to child components.  
 Actions can also be passed into actions to enable action-chaining.
 
-### State
+## State
 
 Rather than State existing within the components, it is stored in a single global state object.
 State is just a pure javascript object (no methods).  
