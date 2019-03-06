@@ -1,7 +1,12 @@
-# React-Fn
+# React-Fn v.2
 A simple, functional approach to React
 
-# v1 out now
+# Migrating from v1 to v2
+
+v2 sees a simplification, dropping the need for `fn.getState()` and `fn.relay()`. 
+Instead `state` and `actions` can simply be used from components and actions.
+
+v2 has also been re-written in plain javascript as rather than typescript.
 
 ## Install
 
@@ -31,7 +36,6 @@ douglas get react-fn-seed
 
 Now you can run using `npm start`
 
-
 ## The Low-down
 
 React-fn is a functional approach to React. Take a look at this basic app below. You'll notice that State and Actions are decoupled from Components altogether, making things clean and simple.
@@ -42,7 +46,7 @@ React-fn is a functional approach to React. Take a look at this basic app below.
 
 ## Basic App
 
-```tsx
+```jsx
 
 // global state
 const state = {
@@ -50,7 +54,7 @@ const state = {
 };
 
 // functional component has state and actions passed in
-const MyComponent = ({ state: any, actions: any }) => (
+const MyComponent = ({ state, actions }) => (
   <div>
     <h1>{state.greeting}</h1>
     <button onClick={ actions.changeGreeting('hello ben') }>Change greeting</button>
@@ -60,8 +64,8 @@ const MyComponent = ({ state: any, actions: any }) => (
 );
 
 // actions have the fn api passed in and fn.updateState can be used to update the App's State
-const actions = (fn: Fn): any => {
-  changeGreeting: (newGreeting) => fn.updateState('greeting', newGreeting)
+const actions = (fn) => {
+  changeGreeting: (fn) => (newGreeting) => fn.updateState('greeting', newGreeting)
 }
 
 // This is where your app will be mounted
@@ -76,7 +80,8 @@ app(state, MyComponent, actions, mount);
 
 Actions are functions that cause side-effects (Usually state changes).  
 As you can see above, Actions are passed in to the first component.  
-Actions are then passed down to child components.
+Actions are then passed down to child components.  
+Actions can also be passed into actions to enable action-chaining.
 
 ### State
 
@@ -133,21 +138,17 @@ fn.updateState('some/nested/node', 'here i am', { rerender: false });
 
 The fn api is accessible via actions.
 
-#### getState
-
-`fn.getState()` - Returns the current state of the app
-
 #### updateState & updateMulti
 
 `fn.updateState(node, value, options)` - Updates the state at a given node with the value.
 The application will refresh unless `options.rerender` is set to false.
-`node` can either be in directory format - eg. `a/nested/node` or an array of strings -eg. `[ 'a', 'nested', 'node']`
+`node` can either be in directory format - eg. `a/nested/node` or an array of strings -eg. `[ 'a', 'nested', 'node' ]`
 
 `fn.updateMulti([ { node: node, value: value }, {...} ], options)` - The same as `updateState`, however allows multiple updates to state at once.
 
 eg. 
 
-```typescript
+```javascript
 
 fn.updateMulti([
   { node: 'a/nested/node', value: 'hello' },
@@ -155,10 +156,6 @@ fn.updateMulti([
 ], { rerender: false })
 
 ```
-
-#### Chaining Actions with fn.relay()
-
-`fn.relay()` - Allows actions to be played from other actions
 
 #### Route Changes with fn.goto()
 
@@ -172,21 +169,33 @@ eg. `myapp.com/page1/part_a` will produce `state.route` of `[ '', 'page1', 'part
 
 TODO
 
+### Action Chaining
+
+Actions can be chained together by simply passing `actions` into a given action as a parameter. 
+`actions` can then simply be called in the same way as you would from a component.
+
 ### Async Actions
 
-To avoid the state in an async action from being out of sync with the rest of the app, actions should use `fn.getState`, which ensures that the current state of the app is used. To be clear, components can simply use the passed in `state` since they are always be synchronous. Actions however can be async and should instead use `fn.getState`...
+There is nothing special that needs to be done to perform async actions.
+Since `state` is the same `state` throughout the app, if the `state` outside the action changes, 
+the `state` inside the action changes too. Everything just stays in sync.
+
+> Make sure that you never reassign `state`. i.e. something like `state = newState`, as this 
+will destroy any references to `state` throughout the app.
+
+**Async example**
 
 ```javascript
 
-const actions = (fn: Fn) => {
-
-  // emitNumber always increments the current state
-  emitNumber() => {
+const actions = (fn) => {
+  ...
+  // incNumber always increments the current state
+  incNumber(fn) => (state) => {
     setInterval( () => {
-      return fn.updateState('counter', fn.getState().counter + 1)
+      return fn.updateState('counter', state.counter + 1)
     }, 1000);
   }
-  
+  ...
 }
 
 ```
@@ -202,9 +211,9 @@ The actions for such an engine might look like...
 ```typescript
 
 startCountEngine: () => {
-  if ( !(fn.getState() as State).countEngine.active ) {
+  if ( !state.countEngine.active ) {
       const countEngineId = setInterval(() => {
-          fn.updateState('countEngine/value', ( fn.getState() as State).countEngine.value + 1 )
+          fn.updateState('countEngine/value', state.countEngine.value + 1 )
       }, 1000);
       fn.updateMulti([
           { node: 'countEngine/active', value: true },
@@ -214,7 +223,7 @@ startCountEngine: () => {
   return;
 },
 stopCountEngine: () => {
-    clearInterval((fn.getState() as State).countEngine.id);
+    clearInterval(state.countEngine.id);
     fn.updateMulti([
         { node: 'countEngine/active', value: false },
         { node: 'countEngine/id', value: undefined }
@@ -236,7 +245,7 @@ eg. The below example will trigger the `stopCountEngine` action when the route i
 const appContainer = document.getElementById('app');
 
 app(state, firstComponent, actions, appContainer, {
-    beforeRender: (state: State, actions: Actions) => {
+    beforeRender: (state, actions) => {
         switch(state.route[1]) {
             case 'page3':
                 actions.stopCountEngine();
