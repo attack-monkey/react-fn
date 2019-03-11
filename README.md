@@ -1,13 +1,6 @@
 # React-Fn v.2
 A simple, functional approach to React
 
-# Migrating from v1 to v2
-
-v2 sees a simplification, dropping the need for `fn.getState()` and `fn.relay()`. 
-Instead `state` and `actions` can simply be used from components and actions.
-
-v2 has also been re-written in plain javascript as rather than typescript.
-
 ## Install
 
 Globally install parcel.js (This is the project bundler).
@@ -85,11 +78,11 @@ Actions can also be passed into actions to enable action-chaining.
 
 ## State
 
-Rather than State existing within the components, it is stored in a single global state object.
+Rather than State existing within components, it is stored in a single State object.
 State is just a pure javascript object (no methods).  
 State is passed into the first component and can be passed down to child components.
 
-Changing state is done in Actions via the `fn.updateState` method...
+Changing state is done by Actions via the `fn.updateState` method...
 
 Let's say your state is 
 
@@ -140,9 +133,11 @@ The fn api is accessible via actions.
 
 #### updateState & updateMulti
 
-`fn.updateState(node, value, options)` - Updates the state at a given node with the value.
-The application will refresh unless `options.rerender` is set to false.
-`node` can either be in directory format - eg. `a/nested/node` or an array of strings -eg. `[ 'a', 'nested', 'node' ]`
+`fn.updateState(node, value, options)` - Updates the state at a given node with the value.  
+The application will refresh unless `options.rerender` is set to false.  
+`node` can either be in directory format 
+- eg. `a/nested/node` or an array of strings 
+- eg. `[ 'a', 'nested', 'node' ]`
 
 `fn.updateMulti([ { node: node, value: value }, {...} ], options)` - The same as `updateState`, however allows multiple updates to state at once.
 
