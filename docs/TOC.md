@@ -1,5 +1,8 @@
 # React-Fn Docs
 
+## Why
+- [Why React-Fn?](https://github.com/attack-monkey/react-fn/tree/develop/docs/Why-React-Fn.md)
+
 ## Migration
 - [Migrating from v1 to v2](https://github.com/attack-monkey/react-fn/tree/develop/docs/Migration.md)
 
