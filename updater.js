@@ -1,10 +1,18 @@
 export function update(state, subArray, val) {
-    if (!subArray) { console.log('No target provided'); } else
-        if (subArray.length < 1) { console.log('No target provided in update'); } else
-            if (!state) { console.log('No state object provided in update'); } else {
-                if (typeof subArray === 'string') { subArray = subArray.split('/').filter(segment => segment); }
-                return reducer(state, subArray, val, 0);
-            }
+    if (!subArray) {
+        console.log('No target provided');
+    } else
+    if (subArray.length < 1) {
+        console.log('No target provided in update');
+    } else
+    if (!state) {
+        console.log('No state object provided in update');
+    } else {
+        if (typeof subArray === 'string') {
+            subArray = subArray.split('/').filter(segment => segment);
+        }
+        return reducer(state, subArray, val, 0);
+    }
 }
 
 function reducer(state, subArray, val, l) {
@@ -12,14 +20,20 @@ function reducer(state, subArray, val, l) {
         const key = subArray[l];
         if (l + 1 === subArray.length) {
             const replacer = isEmpty(val) ? undefined : val;
-            return replacer !== undefined ? 
-                Object.assign(state, { [key]: replacer }) :
-                stateWithoutKey(state, key)
+            return replacer === undefined ?
+                stateWithoutKey(state, key) :
+                Object.assign(state, {
+                    [key]: replacer
+                })
         } else {
             const value = !isEmpty(state[key]) ? state[key] : {};
-            return Object.assign(state, { [key]: reducer(value, subArray, val, l + 1) });
+            return Object.assign(state, {
+                [key]: reducer(value, subArray, val, l + 1)
+            });
         }
-    } catch (error) { console.log('reducer error in update =>', error); }
+    } catch (error) {
+        console.log('reducer error in update =>', error);
+    }
 }
 
 function isEmpty(val) {
@@ -27,7 +41,11 @@ function isEmpty(val) {
         val === null
 }
 
-function stateWithoutKey(state, key) {
-    const { [key]: value, ...withoutKey } = state;
-    return withoutKey;
+function stateWithoutKey(state, removeKey) {
+    console.log('called');
+    return Object.keys(state).reduce((ac, cv) => {
+        return cv === removeKey ? ac : Object.assign({}, ac, {
+            [cv]: state[cv]
+        })
+    }, {});
 }
